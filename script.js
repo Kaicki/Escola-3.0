@@ -1,7 +1,7 @@
 // ===== SCRIPT PARA BUSCAR DADOS DO GOOGLE SHEETS =====
 
 // URL do Google Sheets (você vai criar e compartilhar como CSV/JSON)
-const urlEventos = "COLE_AQUI_O_LINK_DO_SHEET_EVENTOS";
+const urlEventos = "https://docs.google.com/spreadsheets/d/1PTsAjKzSEM4HlGN-aDdm5vdv4V93zz30kQ_WVY5EO-g/edit?usp=drivesdk";
 const urlProjetos = "https://docs.google.com/spreadsheets/d/1PTsAjKzSEM4HlGN-aDdm5vdv4V93zz30kQ_WVY5EO-g/edit?usp=drivesdk";
 
 // Função para carregar eventos
