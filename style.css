@@ -1,0 +1,120 @@
+/* ===== ESTILO GERAL ===== */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f4f9ff;
+  color: #222;
+}
+
+header {
+  background: linear-gradient(90deg, #87CEFF, #00B2EE, #4F94CD, #0000CD);
+  color: #fff;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header img {
+  width: 70px;
+  height: auto;
+  border-radius: 50%;
+}
+
+header h1 {
+  flex: 1;
+  text-align: center;
+  font-size: 1.4em;
+  margin: 0;
+}
+
+nav {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #c7ffd8;
+}
+
+/* ===== SEÇÕES ===== */
+section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+/* ===== CARDS ===== */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.card h3 {
+  margin: 10px 0 5px;
+  color: #0b1d51;
+}
+
+.card p {
+  font-size: 0.95em;
+  color: #444;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: #0b1d51;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
+}
+
+/* ===== BOTÃO ===== */
+button {
+  background: hsla(200, 70%, 50%, 0.8);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: hsla(200, 70%, 40%, 0.9);
+}
