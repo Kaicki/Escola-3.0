@@ -1,1 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notícias - Escola Estadual Mário Pereira Pinto</title>
+<style>
+/* ==== ESTILO GERAL ==== */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f4f9ff;
+  color: #222;
+}
 
+/* ==== CABEÇALHO ==== */
+header {
+  background: linear-gradient(90deg, #87CEFF, #00B2EE, #4F94CD, #0000CD);
+  color: #fff;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header img {
+  width: 90px;
+  height: auto;
+  border-radius: 50%;
+}
+
+header h1 {
+  flex: 1;
+  text-align: center;
+  font-size: 1.4em;
+  margin: 0;
+}
+
+nav {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #c7ffd8;
+}
+
+/* ==== CONTEÚDO ==== */
+section {
+  padding: 60px 20px;
+  text-align: center;
+  max-width: 1200px;
+  margin: auto;
+}
+
+h2 {
+  color: #0b1d51;
+}
+
+p.intro {
+  color: #333;
+  max-width: 700px;
+  margin: 10px auto 40px;
+}
+
+/* ==== GRID DE NOTÍCIAS ==== */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.news-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.news-card:hover {
+  transform: translateY(-6px);
+}
+
+.news-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.news-content {
+  padding: 20px;
+  text-align: left;
+}
+
+.news-content h3 {
+  color: #0b1d51;
+  margin-top: 0;
+}
+
+.news-content p {
+  font-size: 0.95em;
+  color: #555;
+}
+
+button {
+  background: #1f7a3d;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #0b1d51;
+}
+
+/* ==== RODAPÉ ==== */
+footer {
+  background: #0b1d51;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 50px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <img src="../file_00000000cda0620e931c44935fd6fb30.png" alt="Logo da Escola">
+  </div>
+  <h1>Notícias</h1>
+  <nav>
+    <a href="../sobre/index.html">Sobre</a>
+    <a href="../projetos/index.html">Projetos</a>
+    <a href="../noticias/index.html">Notícias</a>
+    <a href="../galeria/index.html">Galeria</a>
+    <a href="../contato/index.html">Contato</a>
+  </nav>
+</header>
+
+<section>
+  <h2>Notícias e Eventos</h2>
+  <p class="intro">Acompanhe as últimas novidades, conquistas e eventos da Escola Estadual Mário Pereira Pinto.</p>
+
+  <div class="news-grid">
+
+    <!-- NOTÍCIA 1 -->
+    <div class="news-card">
+      <img src="https://via.placeholder.com/600x350" alt="Feira de Ciências">
+      <div class="news-content">
+        <h3>Feira de Ciências 2025</h3>
+        <p>Os alunos apresentaram projetos incríveis sobre sustentabilidade, energia limpa e tecnologia na tradicional Feira de Ciências.</p>
+        <button onclick="alert('Notícia completa em breve!')">Ler mais</button>
+      </div>
+    </div>
+
+    <!-- NOTÍCIA 2 -->
+    <div class="news-card">
+      <img src="https://via.placeholder.com/600x350" alt="Semana da Pátria">
+      <div class="news-content">
+        <h3>Semana da Pátria</h3>
+        <p>A escola realizou desfiles, apresentações culturais e exposições em comemoração à independência do Brasil.</p>
+        <button onclick="alert('Notícia completa em breve!')">Ler mais</button>
+      </div>
+    </div>
+
+    <!-- NOTÍCIA 3 -->
+    <div class="news-card">
+      <img src="https://via.placeholder.com/600x350" alt="Dia do Estudante">
+      <div class="news-content">
+        <h3>Dia do Estudante</h3>
+        <p>Um dia de homenagens, gincanas e atividades esportivas em celebração ao empenho e dedicação dos nossos alunos.</p>
+        <button onclick="alert('Notícia completa em breve!')">Ler mais</button>
+      </div>
+    </div>
+
+    <!-- NOTÍCIA 4 -->
+    <div class="news-card">
+      <img src="https://via.placeholder.com/600x350" alt="Campeonato de Matemática">
+      <div class="news-content">
+        <h3>Campeonato de Matemática</h3>
+        <p>Alunos do ensino médio participaram de uma competição divertida de resolução de problemas e raciocínio lógico.</p>
+        <button onclick="alert('Notícia completa em breve!')">Ler mais</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2025 Escola Estadual Mário Pereira Pinto</p>
+  <p>KAICKI BERTAGLIA - 3B1</p>
+</footer>
+
+</body>
+</html>
