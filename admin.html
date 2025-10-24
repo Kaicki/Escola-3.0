@@ -3,97 +3,161 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel Admin - Escola</title>
+<title>Painel Admin - Escola Estadual Mário Pereira Pinto</title>
 <style>
-body {font-family:'Poppins',sans-serif;background:#f4f9ff;color:#222;margin:0;padding:20px;}
-h1 {text-align:center;color:#0b1d51;}
-.container {max-width:700px;margin:auto;background:white;padding:20px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
-form {display:flex;flex-direction:column;gap:15px;margin-bottom:30px;}
-input, textarea {padding:10px;border-radius:6px;border:1px solid #ccc;font-size:1em;width:100%;}
-button {padding:10px 15px;border:none;border-radius:6px;background:#1f7a3d;color:white;cursor:pointer;transition:0.3s;}
-button:hover {background:#0b1d51;}
-h2 {color:#0b1d51;margin-top:40px;}
-ul {list-style:none;padding:0;}
-li {background:#eef;padding:10px;margin-bottom:10px;border-radius:6px;}
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f4f9ff;
+  color: #222;
+}
+header {
+  background: linear-gradient(90deg,#87CEFF,#00B2EE,#4F94CD,#0000CD);
+  color: #fff;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+header h1 {
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+section {
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+h2 { color: #0b1d51; margin-top: 30px; }
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+button {
+  background: #1f7a3d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:hover { background: #0b1d51; }
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 10px 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.card img { width: 100%; height: 200px; object-fit: cover; border-radius: 6px; }
 </style>
 </head>
 <body>
 
-<h1>Painel Admin</h1>
+<header>
+  <h1>Painel Admin - Escola Estadual Mário Pereira Pinto</h1>
+</header>
 
-<div class="container">
-  <h2>Adicionar Projeto</h2>
-  <form id="projetoForm">
-    <input type="text" id="projetoTitulo" placeholder="Título do projeto" required>
-    <input type="text" id="projetoImagem" placeholder="URL da imagem" required>
-    <textarea id="projetoDescricao" placeholder="Descrição do projeto" rows="3" required></textarea>
-    <button type="submit">Adicionar Projeto</button>
-  </form>
+<section>
+<h2>Adicionar Projeto</h2>
+<input type="text" id="projTitle" placeholder="Título do Projeto">
+<input type="text" id="projDesc" placeholder="Descrição do Projeto">
+<input type="text" id="projImg" placeholder="URL da Imagem">
+<button onclick="addProject()">Adicionar Projeto</button>
 
-  <h2>Adicionar Notícia</h2>
-  <form id="noticiaForm">
-    <input type="text" id="noticiaTitulo" placeholder="Título da notícia" required>
-    <input type="date" id="noticiaData" required>
-    <textarea id="noticiaDescricao" placeholder="Descrição da notícia" rows="3" required></textarea>
-    <button type="submit">Adicionar Notícia</button>
-  </form>
+<div id="projectsList"></div>
 
-  <h2>Projetos Atuais</h2>
-  <ul id="listaProjetos"></ul>
+<h2>Adicionar Notícia</h2>
+<input type="text" id="newsTitle" placeholder="Título da Notícia">
+<input type="text" id="newsDesc" placeholder="Descrição da Notícia">
+<input type="text" id="newsImg" placeholder="URL da Imagem">
+<input type="date" id="newsDate">
+<button onclick="addNews()">Adicionar Notícia</button>
 
-  <h2>Notícias Atuais</h2>
-  <ul id="listaNoticias"></ul>
-</div>
+<div id="newsList"></div>
+</section>
 
 <script>
-let projetos = [];
-let noticias = [];
+const sheetProjects = "https://sheetdb.io/api/v1/4vm2wnwchhlz8/projects";
+const sheetNews = "https://sheetdb.io/api/v1/4vm2wnwchhlz8/news";
 
-// Função para renderizar listas
-function atualizarListas() {
-  const ulProjetos = document.getElementById('listaProjetos');
-  ulProjetos.innerHTML = '';
-  projetos.forEach((p,i) => {
-    const li = document.createElement('li');
-    li.textContent = `${p.titulo} - ${p.descricao}`;
-    ulProjetos.appendChild(li);
-  });
-
-  const ulNoticias = document.getElementById('listaNoticias');
-  ulNoticias.innerHTML = '';
-  noticias.forEach((n,i) => {
-    const li = document.createElement('li');
-    li.textContent = `${n.data} - ${n.titulo}`;
-    ulNoticias.appendChild(li);
+// Função para atualizar lista de projetos
+async function loadProjects() {
+  const res = await fetch(sheetProjects);
+  const data = await res.json();
+  const list = document.getElementById('projectsList');
+  list.innerHTML = "";
+  data.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerHTML = `<h3>${item.title}</h3><p>${item.description}</p><img src="${item.image}">`;
+    list.appendChild(div);
   });
 }
 
-// Adicionar projeto
-document.getElementById('projetoForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const titulo = document.getElementById('projetoTitulo').value;
-  const imagem = document.getElementById('projetoImagem').value;
-  const descricao = document.getElementById('projetoDescricao').value;
+// Função para atualizar lista de notícias
+async function loadNews() {
+  const res = await fetch(sheetNews);
+  const data = await res.json();
+  const list = document.getElementById('newsList');
+  list.innerHTML = "";
+  data.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerHTML = `<small>${item.date}</small><h3>${item.title}</h3><p>${item.description}</p><img src="${item.image}">`;
+    list.appendChild(div);
+  });
+}
 
-  projetos.push({titulo, imagem, descricao});
-  atualizarListas();
-  e.target.reset();
-});
+// Adicionar Projeto
+async function addProject() {
+  const title = document.getElementById('projTitle').value;
+  const desc = document.getElementById('projDesc').value;
+  const img = document.getElementById('projImg').value;
+  if (!title || !desc || !img) { alert('Preencha todos os campos'); return; }
 
-// Adicionar notícia
-document.getElementById('noticiaForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const titulo = document.getElementById('noticiaTitulo').value;
-  const data = document.getElementById('noticiaData').value;
-  const descricao = document.getElementById('noticiaDescricao').value;
+  await fetch(sheetProjects, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({data: {title, description: desc, image: img}})
+  });
 
-  noticias.push({titulo, data, descricao});
-  atualizarListas();
-  e.target.reset();
-});
+  document.getElementById('projTitle').value = '';
+  document.getElementById('projDesc').value = '';
+  document.getElementById('projImg').value = '';
+  loadProjects();
+}
 
-// Inicializar
-atualizarListas();
+// Adicionar Notícia
+async function addNews() {
+  const title = document.getElementById('newsTitle').value;
+  const desc = document.getElementById('newsDesc').value;
+  const img = document.getElementById('newsImg').value;
+  const date = document.getElementById('newsDate').value;
+  if (!title || !desc || !img || !date) { alert('Preencha todos os campos'); return; }
+
+  await fetch(sheetNews, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({data: {title, description: desc, image: img, date}})
+  });
+
+  document.getElementById('newsTitle').value = '';
+  document.getElementById('newsDesc').value = '';
+  document.getElementById('newsImg').value = '';
+  document.getElementById('newsDate').value = '';
+  loadNews();
+}
+
+// Carrega ao abrir
+loadProjects();
+loadNews();
 </script>
 
 </body>
