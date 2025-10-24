@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Admin - Escola</title>
+<style>
+body {font-family:'Poppins',sans-serif;background:#f4f9ff;color:#222;margin:0;padding:20px;}
+h1 {text-align:center;color:#0b1d51;}
+.container {max-width:700px;margin:auto;background:white;padding:20px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+form {display:flex;flex-direction:column;gap:15px;margin-bottom:30px;}
+input, textarea {padding:10px;border-radius:6px;border:1px solid #ccc;font-size:1em;width:100%;}
+button {padding:10px 15px;border:none;border-radius:6px;background:#1f7a3d;color:white;cursor:pointer;transition:0.3s;}
+button:hover {background:#0b1d51;}
+h2 {color:#0b1d51;margin-top:40px;}
+ul {list-style:none;padding:0;}
+li {background:#eef;padding:10px;margin-bottom:10px;border-radius:6px;}
+</style>
+</head>
+<body>
+
+<h1>Painel Admin</h1>
+
+<div class="container">
+  <h2>Adicionar Projeto</h2>
+  <form id="projetoForm">
+    <input type="text" id="projetoTitulo" placeholder="Título do projeto" required>
+    <input type="text" id="projetoImagem" placeholder="URL da imagem" required>
+    <textarea id="projetoDescricao" placeholder="Descrição do projeto" rows="3" required></textarea>
+    <button type="submit">Adicionar Projeto</button>
+  </form>
+
+  <h2>Adicionar Notícia</h2>
+  <form id="noticiaForm">
+    <input type="text" id="noticiaTitulo" placeholder="Título da notícia" required>
+    <input type="date" id="noticiaData" required>
+    <textarea id="noticiaDescricao" placeholder="Descrição da notícia" rows="3" required></textarea>
+    <button type="submit">Adicionar Notícia</button>
+  </form>
+
+  <h2>Projetos Atuais</h2>
+  <ul id="listaProjetos"></ul>
+
+  <h2>Notícias Atuais</h2>
+  <ul id="listaNoticias"></ul>
+</div>
+
+<script>
+let projetos = [];
+let noticias = [];
+
+// Função para renderizar listas
+function atualizarListas() {
+  const ulProjetos = document.getElementById('listaProjetos');
+  ulProjetos.innerHTML = '';
+  projetos.forEach((p,i) => {
+    const li = document.createElement('li');
+    li.textContent = `${p.titulo} - ${p.descricao}`;
+    ulProjetos.appendChild(li);
+  });
+
+  const ulNoticias = document.getElementById('listaNoticias');
+  ulNoticias.innerHTML = '';
+  noticias.forEach((n,i) => {
+    const li = document.createElement('li');
+    li.textContent = `${n.data} - ${n.titulo}`;
+    ulNoticias.appendChild(li);
+  });
+}
+
+// Adicionar projeto
+document.getElementById('projetoForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const titulo = document.getElementById('projetoTitulo').value;
+  const imagem = document.getElementById('projetoImagem').value;
+  const descricao = document.getElementById('projetoDescricao').value;
+
+  projetos.push({titulo, imagem, descricao});
+  atualizarListas();
+  e.target.reset();
+});
+
+// Adicionar notícia
+document.getElementById('noticiaForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const titulo = document.getElementById('noticiaTitulo').value;
+  const data = document.getElementById('noticiaData').value;
+  const descricao = document.getElementById('noticiaDescricao').value;
+
+  noticias.push({titulo, data, descricao});
+  atualizarListas();
+  e.target.reset();
+});
+
+// Inicializar
+atualizarListas();
+</script>
+
+</body>
+</html>
