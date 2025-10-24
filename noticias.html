@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notícias - Escola Estadual Mário Pereira Pinto</title>
+<style>
+body {margin:0;font-family:'Poppins',sans-serif;background:#f4f9ff;color:#222;}
+header {background:linear-gradient(90deg,#87CEFF,#00B2EE,#4F94CD,#0000CD);color:#fff;padding:10px 15px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;}
+.header-left {display:flex;align-items:center;gap:10px;}
+header img {width:90px;height:auto;border-radius:50%;}
+header h1 {flex:1;text-align:center;font-size:1.4em;margin:0;}
+nav {display:flex;gap:15px;flex-wrap:wrap;}
+nav a {color:#fff;text-decoration:none;font-weight:bold;transition:0.3s;}
+nav a:hover {color:#c7ffd8;}
+section {padding:60px 20px;text-align:center;}
+h2 {color:#0b1d51;}
+.news {max-width:900px;margin:auto;display:flex;flex-direction:column;gap:25px;margin-top:40px;}
+.article {background:white;border-radius:12px;padding:20px;box-shadow:0 2px 6px rgba(0,0,0,0.1);text-align:left;}
+.article h3 {color:#1f7a3d;}
+.article p {line-height:1.6;}
+.article small {color:#555;display:block;margin-bottom:8px;}
+footer {background:#0b1d51;color:white;text-align:center;padding:15px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <img src="file_00000000cda0620e931c44935fd6fb30.png" alt="Logo da Escola">
+  </div>
+  <h1>Notícias</h1>
+  <nav>
+    <a href="index.html">Sobre</a>
+    <a href="projetos.html">Projetos</a>
+    <a href="noticias.html">Notícias</a>
+    <a href="galeria.html">Galeria</a>
+    <a href="contato.html">Contato</a>
+  </nav>
+</header>
+
+<section>
+  <h2>Últimas Notícias</h2>
+  <div class="news" id="noticiasGrid"></div>
+</section>
+
+<footer>
+  <p>&copy; 2025 Escola Estadual Mário Pereira Pinto</p>
+  <p>KAICKI BERTAGLIA - 3B1</p>
+</footer>
+
+<script>
+const eventosUrl = "https://api.npoint.io/6775ba417e917b2e1445";
+
+async function carregarNoticias() {
+  const res = await fetch(eventosUrl);
+  const noticias = await res.json();
+  const grid = document.getElementById('noticiasGrid');
+  noticias.forEach(n => {
+    const artigo = document.createElement('div');
+    artigo.className = 'article';
+    artigo.innerHTML = `
+      <small>${n.data || ''}</small>
+      <h3>${n.titulo}</h3>
+      <p>${n.descricao}</p>
+    `;
+    grid.appendChild(artigo);
+  });
+}
+
+carregarNoticias();
+</script>
+
+</body>
+</html>
