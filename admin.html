@@ -3,161 +3,107 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel Admin - Escola Estadual Mário Pereira Pinto</title>
+<title>Painel Admin - Escola</title>
 <style>
 body {
-  margin: 0;
   font-family: 'Poppins', sans-serif;
   background: #f4f9ff;
   color: #222;
-}
-header {
-  background: linear-gradient(90deg,#87CEFF,#00B2EE,#4F94CD,#0000CD);
-  color: #fff;
-  padding: 10px 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-header h1 {
   margin: 0;
-  flex: 1;
-  text-align: center;
-}
-section {
   padding: 20px;
-  max-width: 1000px;
-  margin: auto;
 }
-h2 { color: #0b1d51; margin-top: 30px; }
+h1 {
+  text-align: center;
+  color: #0b1d51;
+}
+form {
+  max-width: 500px;
+  margin: auto;
+  background: #e9f6ec;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
 input, textarea {
   width: 100%;
-  padding: 10px;
-  margin: 6px 0;
-  border-radius: 6px;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
   border: 1px solid #ccc;
 }
 button {
   background: #1f7a3d;
   color: white;
   border: none;
-  padding: 10px 20px;
-  margin-top: 6px;
-  border-radius: 6px;
+  padding: 12px 20px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 1em;
 }
-button:hover { background: #0b1d51; }
-.card {
-  background: white;
-  border-radius: 12px;
-  padding: 15px;
-  margin: 10px 0;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+button:hover {
+  background: #0b1d51;
 }
-.card img { width: 100%; height: 200px; object-fit: cover; border-radius: 6px; }
+.success {
+  color: green;
+  text-align: center;
+}
+.error {
+  color: red;
+  text-align: center;
+}
 </style>
 </head>
 <body>
 
-<header>
-  <h1>Painel Admin - Escola Estadual Mário Pereira Pinto</h1>
-</header>
+<h1>Painel Admin - Escola</h1>
 
-<section>
-<h2>Adicionar Projeto</h2>
-<input type="text" id="projTitle" placeholder="Título do Projeto">
-<input type="text" id="projDesc" placeholder="Descrição do Projeto">
-<input type="text" id="projImg" placeholder="URL da Imagem">
-<button onclick="addProject()">Adicionar Projeto</button>
-
-<div id="projectsList"></div>
-
-<h2>Adicionar Notícia</h2>
-<input type="text" id="newsTitle" placeholder="Título da Notícia">
-<input type="text" id="newsDesc" placeholder="Descrição da Notícia">
-<input type="text" id="newsImg" placeholder="URL da Imagem">
-<input type="date" id="newsDate">
-<button onclick="addNews()">Adicionar Notícia</button>
-
-<div id="newsList"></div>
-</section>
+<form id="adminForm">
+  <input type="text" id="titulo" placeholder="Título" required>
+  <textarea id="descricao" rows="4" placeholder="Descrição" required></textarea>
+  <input type="text" id="imagem" placeholder="Link da imagem" required>
+  <button type="submit">Postar</button>
+  <p class="success" id="successMsg"></p>
+  <p class="error" id="errorMsg"></p>
+</form>
 
 <script>
-const sheetProjects = "https://sheetdb.io/api/v1/4vm2wnwchhlz8/projects";
-const sheetNews = "https://sheetdb.io/api/v1/4vm2wnwchhlz8/news";
+const form = document.getElementById('adminForm');
+const successMsg = document.getElementById('successMsg');
+const errorMsg = document.getElementById('errorMsg');
 
-// Função para atualizar lista de projetos
-async function loadProjects() {
-  const res = await fetch(sheetProjects);
-  const data = await res.json();
-  const list = document.getElementById('projectsList');
-  list.innerHTML = "";
-  data.forEach(item => {
-    const div = document.createElement('div');
-    div.className = 'card';
-    div.innerHTML = `<h3>${item.title}</h3><p>${item.description}</p><img src="${item.image}">`;
-    list.appendChild(div);
-  });
-}
+// Substitua com a URL da sua SheetDB
+const SHEETDB_URL = "https://sheetdb.io/api/v1/4vm2wnwchhlz8";
 
-// Função para atualizar lista de notícias
-async function loadNews() {
-  const res = await fetch(sheetNews);
-  const data = await res.json();
-  const list = document.getElementById('newsList');
-  list.innerHTML = "";
-  data.forEach(item => {
-    const div = document.createElement('div');
-    div.className = 'card';
-    div.innerHTML = `<small>${item.date}</small><h3>${item.title}</h3><p>${item.description}</p><img src="${item.image}">`;
-    list.appendChild(div);
-  });
-}
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-// Adicionar Projeto
-async function addProject() {
-  const title = document.getElementById('projTitle').value;
-  const desc = document.getElementById('projDesc').value;
-  const img = document.getElementById('projImg').value;
-  if (!title || !desc || !img) { alert('Preencha todos os campos'); return; }
+  const data = {
+    data: {
+      titulo: document.getElementById('titulo').value,
+      descricao: document.getElementById('descricao').value,
+      imagem: document.getElementById('imagem').value
+    }
+  };
 
-  await fetch(sheetProjects, {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({data: {title, description: desc, image: img}})
-  });
+  try {
+    const response = await fetch(SHEETDB_URL, {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
 
-  document.getElementById('projTitle').value = '';
-  document.getElementById('projDesc').value = '';
-  document.getElementById('projImg').value = '';
-  loadProjects();
-}
-
-// Adicionar Notícia
-async function addNews() {
-  const title = document.getElementById('newsTitle').value;
-  const desc = document.getElementById('newsDesc').value;
-  const img = document.getElementById('newsImg').value;
-  const date = document.getElementById('newsDate').value;
-  if (!title || !desc || !img || !date) { alert('Preencha todos os campos'); return; }
-
-  await fetch(sheetNews, {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({data: {title, description: desc, image: img, date}})
-  });
-
-  document.getElementById('newsTitle').value = '';
-  document.getElementById('newsDesc').value = '';
-  document.getElementById('newsImg').value = '';
-  document.getElementById('newsDate').value = '';
-  loadNews();
-}
-
-// Carrega ao abrir
-loadProjects();
-loadNews();
+    if(response.ok) {
+      successMsg.textContent = "Postagem realizada com sucesso!";
+      errorMsg.textContent = "";
+      form.reset();
+    } else {
+      throw new Error("Falha ao postar.");
+    }
+  } catch (err) {
+    errorMsg.textContent = "Erro: " + err.message;
+    successMsg.textContent = "";
+  }
+});
 </script>
 
 </body>
